@@ -1,0 +1,53 @@
+name: test
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: '测试qemu'
+        # Default value if no value is explicitly provided
+        default: 'World'
+        # Input has to be provided for the workflow to run
+        required: true
+        # The data type of the input
+        type: string
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "greet"
+  greet:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-22.04
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    - uses: graalvm/setup-graalvm@v1.2.1
+      with:
+        java-version: '22'
+        distribution: 'graalvm'
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Example step
+      run: |
+        echo "GRAALVM_HOME: $GRAALVM_HOME"
+        echo "JAVA_HOME: $JAVA_HOME"
+        java --version
+        native-image --version
+        which java
+        whereis java
+        echo "JAVA_HOME=$JAVA_HOME" >> "$GITHUB_ENV"
+        echo "GRAALVM_HOME=$GRAALVM_HOME" >> "$GITHUB_ENV"
+    - uses: uraimo/run-on-arch-action@v2.7.1
+      name: Run aarch64
+      id: runcmd
+      with:
+        arch: armv7
+        distro: ubuntu22.04
+        githubToken: ${{ secrets.GITHUB_TOKEN }}
+        # Set an output parameter `uname` for use in subsequent steps
+        setup: |
+           echo "==============out"
+           echo "GRAALVM_HOME: $GRAALVM_HOME"
+           echo "JAVA_HOME: $JAVA_HOME"
+        run: |
+          uname -a
+           echo "==============aarch qemu"
+           echo "GRAALVM_HOME: $GRAALVM_HOME"
+           echo "JAVA_HOME: $JAVA_HOME"
