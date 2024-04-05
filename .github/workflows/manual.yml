@@ -38,7 +38,7 @@ jobs:
       name: Run aarch64
       id: runcmd
       with:
-        arch: armv7
+        arch: aarch64
         distro: ubuntu22.04
         githubToken: ${{ secrets.GITHUB_TOKEN }}
         # Set an output parameter `uname` for use in subsequent steps
