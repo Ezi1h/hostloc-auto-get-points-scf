@@ -24,7 +24,7 @@ jobs:
         java-version: '22'
         distribution: 'graalvm'
         github-token: ${{ secrets.GITHUB_TOKEN }}
-    - name: Example step
+    - name: echo GRAALVM env
       run: |
         echo "GRAALVM_HOME: $GRAALVM_HOME"
         echo "JAVA_HOME: $JAVA_HOME"
@@ -47,8 +47,8 @@ jobs:
            echo "GRAALVM_HOME: $GRAALVM_HOME"
            echo "JAVA_HOME: $JAVA_HOME"
         env: |
-          GRAALVM_HOME: $GRAALVM_HOME
-          JAVA_HOME: $JAVA_HOME
+          GRAALVM_HOME: ${{ env.GRAALVM_HOME }}
+          JAVA_HOME: ${{ env.JAVA_HOME }}
         run: |
           uname -a
            echo "==============aarch qemu"
