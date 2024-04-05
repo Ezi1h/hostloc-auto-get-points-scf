@@ -46,6 +46,9 @@ jobs:
            echo "==============out"
            echo "GRAALVM_HOME: $GRAALVM_HOME"
            echo "JAVA_HOME: $JAVA_HOME"
+        env: |
+          GRAALVM_HOME: $GRAALVM_HOME
+          JAVA_HOME: $JAVA_HOME
         run: |
           uname -a
            echo "==============aarch qemu"
