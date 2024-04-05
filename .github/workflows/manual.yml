@@ -34,6 +34,7 @@ jobs:
         whereis java
         echo "JAVA_HOME=$JAVA_HOME" >> "$GITHUB_ENV"
         echo "GRAALVM_HOME=$GRAALVM_HOME" >> "$GITHUB_ENV"
+        echo "目录是：$(pwd)，当前用户 `whoami`"
     - uses: uraimo/run-on-arch-action@v2.7.1
       name: Run aarch64
       id: runcmd
@@ -44,13 +45,15 @@ jobs:
         # Set an output parameter `uname` for use in subsequent steps
         setup: |
            echo "==============out"
+           echo "目录是：$(pwd)，当前用户 `whoami`"
            echo "GRAALVM_HOME: $GRAALVM_HOME"
            echo "JAVA_HOME: $JAVA_HOME"
         env: |
           GRAALVM_HOME: ${{ env.GRAALVM_HOME }}
           JAVA_HOME: ${{ env.JAVA_HOME }}
         run: |
-          uname -a
+           uname -a
            echo "==============aarch qemu"
            echo "GRAALVM_HOME: $GRAALVM_HOME"
            echo "JAVA_HOME: $JAVA_HOME"
+           echo "目录是：$(pwd)，当前用户 `whoami`"
