@@ -57,7 +57,7 @@ jobs:
            # echo "GRAALVM_HOME: $GRAALVM_HOME"
            # echo "JAVA_HOME: $JAVA_HOME"
         dockerRunArgs: |
-            --volume "~/.m2/repository:~/.m2/repository"
+            --volume "~/.m2/repository:/root/.m2/repository"
         env: |
           GRAALVM_HOME: /graalvm-jdk-22+36.1
           JAVA_HOME: /graalvm-jdk-22+36.1
