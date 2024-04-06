@@ -58,7 +58,9 @@ jobs:
           echo "==============aarch install"
           uname -a
           apt-get update -qq -y
-          apt-get install -qq -y curl git build-essential libz-dev zlib1g-dev zip unzip
+          apt-get install -qq -y util-linux curl git build-essential libz-dev zlib1g-dev zip unzip
+          echo "install arch值：`arch`"
+          echo "install lscpu值：`lscpu`"
           curl -SOL https://download.oracle.com/graalvm/22/latest/graalvm-jdk-22_linux-aarch64_bin.tar.gz
           tar -zxf graalvm-jdk-22_linux-aarch64_bin.tar.gz
           ls -alh
@@ -80,11 +82,13 @@ jobs:
         run: |
            uname -a
            echo "==============aarch run"
+           echo "run arch值：`arch`"
+           echo "run lscpu值：`lscpu`"
            echo "run path变量是：$PATH"
            echo "run 目录是：$(pwd)，当前用户 `whoami`"
            ls -alh
-           echo "GRAALVM_HOME: $GRAALVM_HOME"
-           echo "JAVA_HOME: $JAVA_HOME"
+           # echo "GRAALVM_HOME: $GRAALVM_HOME"
+           # echo "JAVA_HOME: $JAVA_HOME"
            which java
            whereis java
            java --version
