@@ -58,6 +58,8 @@ jobs:
           uname -a
           # apt-get update -qq -y
           # apt-get install -qq -y util-linux curl git build-essential libz-dev zlib1g-dev zip unzip
+          apt-get update -qq -y
+          apt-get install -qq -y util-linux curl
           # echo "install arch值：`arch`"
           # echo "install lscpu值：`lscpu`"
           curl -SOL https://download.oracle.com/graalvm/22/latest/graalvm-jdk-22_linux-aarch64_bin.tar.gz
