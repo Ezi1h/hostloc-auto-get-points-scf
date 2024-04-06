@@ -19,41 +19,62 @@ jobs:
     runs-on: ubuntu-22.04
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - uses: graalvm/setup-graalvm@v1.2.1
-      with:
-        java-version: '22'
-        distribution: 'graalvm'
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-    - name: echo GRAALVM env
-      run: |
-        echo "GRAALVM_HOME: $GRAALVM_HOME"
-        echo "JAVA_HOME: $JAVA_HOME"
-        java --version
-        native-image --version
-        which java
-        whereis java
-        echo "JAVA_HOME=$JAVA_HOME" >> "$GITHUB_ENV"
-        echo "GRAALVM_HOME=$GRAALVM_HOME" >> "$GITHUB_ENV"
-        echo "目录是：$(pwd)，当前用户 `whoami`"
+    # - uses: graalvm/setup-graalvm@v1.2.1
+    #   with:
+    #     java-version: '22'
+    #     distribution: 'graalvm'
+    #     github-token: ${{ secrets.GITHUB_TOKEN }}
+    # - name: echo GRAALVM env
+    #   run: |
+    #     echo "GRAALVM_HOME: $GRAALVM_HOME"
+    #     echo "JAVA_HOME: $JAVA_HOME"
+    #     java --version
+    #     native-image --version
+    #     which java
+    #     whereis java
+    #     echo "JAVA_HOME=$JAVA_HOME" >> "$GITHUB_ENV"
+    #     echo "GRAALVM_HOME=$GRAALVM_HOME" >> "$GITHUB_ENV"
+    #     echo "目录是：$(pwd)，当前用户 `whoami`"
+    # - uses: actions/checkout@v4.1.2
     - uses: uraimo/run-on-arch-action@v2.7.1
       name: Run aarch64
-      id: runcmd
+      id: build_aarch64
       with:
         arch: aarch64
         distro: ubuntu22.04
         githubToken: ${{ secrets.GITHUB_TOKEN }}
         # Set an output parameter `uname` for use in subsequent steps
+        #宿主机runner运行的命令
         setup: |
-           echo "==============out"
+           echo "==============runner setup"
            echo "目录是：$(pwd)，当前用户 `whoami`"
+           echo "ls -alh"
            echo "GRAALVM_HOME: $GRAALVM_HOME"
            echo "JAVA_HOME: $JAVA_HOME"
         env: |
           GRAALVM_HOME: ${{ env.GRAALVM_HOME }}
           JAVA_HOME: ${{ env.JAVA_HOME }}
+        install: |
+          echo "==============aarch install"
+          uname -a
+          apt-get update -q -y
+          apt-get install -q -y git build-essential libz-dev zlib1g-dev zip unzip
+          curl https://download.oracle.com/graalvm/22/latest/graalvm-jdk-22_linux-aarch64_bin.tar.gz
+          tar -xzf graalvm-jdk-22_linux-aarch64_bin.tar.gz
+          cd graalvm-jdk-22+36.1
+          echo "目录是：$(pwd)，当前用户 `whoami`"
+
+          export JAVA_HOME=$(pwd)
+          export GRAALVM_HOME=$(pwd)
+        #容器中运行的命令
         run: |
            uname -a
-           echo "==============aarch qemu"
+           echo "==============aarch run"
            echo "GRAALVM_HOME: $GRAALVM_HOME"
            echo "JAVA_HOME: $JAVA_HOME"
            echo "目录是：$(pwd)，当前用户 `whoami`"
+           echo "ls -alh"
+           java --version
+           native-image --version
+           which java
+           whereis java
