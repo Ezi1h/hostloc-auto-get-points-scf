@@ -49,17 +49,17 @@ jobs:
            echo "==============runner setup"
            echo "目录是：$(pwd)，当前用户 `whoami`"
            echo "ls -alh"
-           echo "GRAALVM_HOME: $GRAALVM_HOME"
-           echo "JAVA_HOME: $JAVA_HOME"
-        env: |
-          GRAALVM_HOME: ${{ env.GRAALVM_HOME }}
-          JAVA_HOME: ${{ env.JAVA_HOME }}
+           # echo "GRAALVM_HOME: $GRAALVM_HOME"
+           # echo "JAVA_HOME: $JAVA_HOME"
+        # env: |
+        #   GRAALVM_HOME: ${{ env.GRAALVM_HOME }}
+        #   JAVA_HOME: ${{ env.JAVA_HOME }}
         install: |
           echo "==============aarch install"
           uname -a
           apt-get update -q -y
           apt-get install -q -y git build-essential libz-dev zlib1g-dev zip unzip
-          curl https://download.oracle.com/graalvm/22/latest/graalvm-jdk-22_linux-aarch64_bin.tar.gz
+          curl -SOL https://download.oracle.com/graalvm/22/latest/graalvm-jdk-22_linux-aarch64_bin.tar.gz
           tar -xzf graalvm-jdk-22_linux-aarch64_bin.tar.gz
           cd graalvm-jdk-22+36.1
           echo "目录是：$(pwd)，当前用户 `whoami`"
