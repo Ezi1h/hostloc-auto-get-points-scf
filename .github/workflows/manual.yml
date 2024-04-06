@@ -74,8 +74,8 @@ jobs:
           native-image --version
           which java
           whereis java
-          echo "JAVA_HOME=$JAVA_HOME" >> "$GITHUB_ENV"
-          echo "GRAALVM_HOME=$GRAALVM_HOME" >> "$GITHUB_ENV"
+          echo "-----------------------------"
+          cat /root/run-on-arch-install.sh
         #容器中运行的命令
         run: |
            uname -a
