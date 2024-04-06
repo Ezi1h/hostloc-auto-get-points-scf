@@ -36,6 +36,11 @@ jobs:
     #     echo "GRAALVM_HOME=$GRAALVM_HOME" >> "$GITHUB_ENV"
     #     echo "目录是：$(pwd)，当前用户 `whoami`"
     # - uses: actions/checkout@v4.1.2
+    - name: Cache
+      uses: actions/cache@v4.0.2
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
     - uses: uraimo/run-on-arch-action@v2.7.1
       name: Run aarch64
       id: build_aarch64
@@ -48,11 +53,15 @@ jobs:
            echo "==============runner setup"
            echo "setup 目录是：$(pwd)，当前用户 `whoami`"
            ls -alh
+           mkdir -p ~/.m2/repository
            # echo "GRAALVM_HOME: $GRAALVM_HOME"
            # echo "JAVA_HOME: $JAVA_HOME"
+        dockerRunArgs: |
+            --volume "~/.m2/repository:~/.m2/repository"
         env: |
           GRAALVM_HOME: /graalvm-jdk-22+36.1
           JAVA_HOME: /graalvm-jdk-22+36.1
+          M2_HOME: /apache-maven-3.9.6
         install: |
           echo "==============aarch install"
           # uname -a
@@ -66,8 +75,11 @@ jobs:
           # echo "install lscpu值：`lscpu`"
           curl -SOL https://download.oracle.com/graalvm/22/latest/graalvm-jdk-22_linux-aarch64_bin.tar.gz
           tar -zxf graalvm-jdk-22_linux-aarch64_bin.tar.gz
-          cd graalvm-jdk-22+36.1
-          echo " install 目录是：$(pwd)，当前用户 `whoami`"
+          mkdir -p ~/.m2/repository
+          curl -SOL https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz
+          tar -zxf apache-maven-3.9.6-bin.tar.gz
+          # cd graalvm-jdk-22+36.1
+          # echo " install 目录是：$(pwd)，当前用户 `whoami`"
           # export JAVA_HOME=$(pwd)
           # export GRAALVM_HOME=$(pwd)
           # echo "export JAVA_HOME=$(pwd)" >> /root/.bashrc
@@ -79,18 +91,17 @@ jobs:
         #容器中运行的命令
         run: |
            echo "==============aarch run"
-           export PATH=$PATH:$JAVA_HOME/bin
+           export PATH=$PATH:$M2_HOME/bin:$JAVA_HOME/bin
            env
            # uname -a
            # echo "run arch值：`arch`"
            # echo "run lscpu值：`lscpu`"
            # echo "run path变量是：$PATH"
            # echo "run 目录是：$(pwd)，当前用户 `whoami`"
-           # # ls -alh
-           # echo "GRAALVM_HOME: $GRAALVM_HOME"
-           # echo "JAVA_HOME: $JAVA_HOME"
-           # which java
-           # whereis java
+           echo "============java ↓"
            java --version
+           echo "============mvn ↓"
+           mvn --version
+           echo "============native-image ↓"
            native-image --version
         
