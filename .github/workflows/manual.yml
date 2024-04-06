@@ -57,8 +57,8 @@ jobs:
         install: |
           echo "==============aarch install"
           uname -a
-          apt-get update -q -y
-          apt-get install -q -y git build-essential libz-dev zlib1g-dev zip unzip
+          #apt-get update -q -y
+          apt-get install -q -y curl git build-essential libz-dev zlib1g-dev zip unzip
           curl -SOL https://download.oracle.com/graalvm/22/latest/graalvm-jdk-22_linux-aarch64_bin.tar.gz
           tar -xzf graalvm-jdk-22_linux-aarch64_bin.tar.gz
           cd graalvm-jdk-22+36.1
