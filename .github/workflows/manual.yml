@@ -79,8 +79,8 @@ jobs:
         #容器中运行的命令
         run: |
            echo "==============aarch run"
-           env
            export PATH=$PATH:$JAVA_HOME/bin
+           env
            # uname -a
            # echo "run arch值：`arch`"
            # echo "run lscpu值：`lscpu`"
@@ -91,6 +91,6 @@ jobs:
            # echo "JAVA_HOME: $JAVA_HOME"
            # which java
            # whereis java
-           # java --version
-           # native-image --version
+           java --version
+           native-image --version
         
