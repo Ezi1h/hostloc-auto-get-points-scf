@@ -56,7 +56,7 @@ jobs:
         install: |
           echo "==============aarch install"
           # uname -a
-          export PATH=$PATH:$JAVA_HOME/bin
+          # export PATH=$PATH:$JAVA_HOME/bin
           env
           # apt-get update -qq -y
           # apt-get install -qq -y util-linux curl git build-essential libz-dev zlib1g-dev zip unzip
