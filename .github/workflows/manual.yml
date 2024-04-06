@@ -60,7 +60,7 @@ jobs:
           apt-get update -qq -y
           apt-get install -qq -y curl git build-essential libz-dev zlib1g-dev zip unzip
           curl -SOL https://download.oracle.com/graalvm/22/latest/graalvm-jdk-22_linux-aarch64_bin.tar.gz
-          tar -zxzf graalvm-jdk-22_linux-aarch64_bin.tar.gz
+          tar -zxvf graalvm-jdk-22_linux-aarch64_bin.tar.gz
           ls -alh
           cd graalvm-jdk-22+36.1
           echo " install 目录是：$(pwd)，当前用户 `whoami`"
