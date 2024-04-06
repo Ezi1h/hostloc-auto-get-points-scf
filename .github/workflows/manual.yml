@@ -47,8 +47,8 @@ jobs:
         #宿主机runner运行的命令
         setup: |
            echo "==============runner setup"
-           echo "目录是：$(pwd)，当前用户 `whoami`"
-           echo "ls -alh"
+           echo "setup 目录是：$(pwd)，当前用户 `whoami`"
+           ls -alh
            # echo "GRAALVM_HOME: $GRAALVM_HOME"
            # echo "JAVA_HOME: $JAVA_HOME"
         # env: |
@@ -57,23 +57,23 @@ jobs:
         install: |
           echo "==============aarch install"
           uname -a
-          apt-get update -q -y
-          apt-get install -q -y curl git build-essential libz-dev zlib1g-dev zip unzip
+          apt-get update -qq -y
+          apt-get install -qq -y curl git build-essential libz-dev zlib1g-dev zip unzip
           curl -SOL https://download.oracle.com/graalvm/22/latest/graalvm-jdk-22_linux-aarch64_bin.tar.gz
-          tar -xzf graalvm-jdk-22_linux-aarch64_bin.tar.gz
+          tar -zxzf graalvm-jdk-22_linux-aarch64_bin.tar.gz
+          ls -alh
           cd graalvm-jdk-22+36.1
-          echo "目录是：$(pwd)，当前用户 `whoami`"
-
+          echo " install 目录是：$(pwd)，当前用户 `whoami`"
           export JAVA_HOME=$(pwd)
           export GRAALVM_HOME=$(pwd)
         #容器中运行的命令
         run: |
            uname -a
            echo "==============aarch run"
+           ls -alh
            echo "GRAALVM_HOME: $GRAALVM_HOME"
            echo "JAVA_HOME: $JAVA_HOME"
-           echo "目录是：$(pwd)，当前用户 `whoami`"
-           echo "ls -alh"
+           echo "run 目录是：$(pwd)，当前用户 `whoami`"
            java --version
            native-image --version
            which java
