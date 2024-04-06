@@ -74,17 +74,18 @@ jobs:
           # native-image --version
         #容器中运行的命令
         run: |
-           uname -a
-           echo "==============aarch run"
-           echo "run arch值：`arch`"
-           echo "run lscpu值：`lscpu`"
-           echo "run path变量是：$PATH"
-           echo "run 目录是：$(pwd)，当前用户 `whoami`"
-           # ls -alh
-           echo "GRAALVM_HOME: $GRAALVM_HOME"
-           echo "JAVA_HOME: $JAVA_HOME"
-           which java
-           whereis java
-           java --version
-           native-image --version
+           env
+           # uname -a
+           # echo "==============aarch run"
+           # echo "run arch值：`arch`"
+           # echo "run lscpu值：`lscpu`"
+           # echo "run path变量是：$PATH"
+           # echo "run 目录是：$(pwd)，当前用户 `whoami`"
+           # # ls -alh
+           # echo "GRAALVM_HOME: $GRAALVM_HOME"
+           # echo "JAVA_HOME: $JAVA_HOME"
+           # which java
+           # whereis java
+           # java --version
+           # native-image --version
         
