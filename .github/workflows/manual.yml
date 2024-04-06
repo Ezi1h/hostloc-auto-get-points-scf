@@ -1,23 +1,18 @@
 name: test
 on:
   workflow_dispatch:
-    inputs:
-      name:
-        description: '测试qemu'
-        # Default value if no value is explicitly provided
-        default: 'World'
-        # Input has to be provided for the workflow to run
-        required: true
-        # The data type of the input
-        type: string
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+    # inputs:
+    #   name:
+    #     description: '测试qemu'
+    #     # Default value if no value is explicitly provided
+    #     default: 'World'
+    #     # Input has to be provided for the workflow to run
+    #     required: true
+    #     # The data type of the input
+    #     type: string
 jobs:
-  # This workflow contains a single job called "greet"
   greet:
-    # The type of runner that the job will run on
     runs-on: ubuntu-22.04
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # - uses: graalvm/setup-graalvm@v1.2.1
     #   with:
@@ -64,40 +59,18 @@ jobs:
           M2_HOME: /apache-maven-3.9.6
         install: |
           echo "==============aarch install"
-          # uname -a
-          # export PATH=$PATH:$JAVA_HOME/bin
-          env
-          # apt-get update -qq -y
-          # apt-get install -qq -y util-linux curl git build-essential libz-dev zlib1g-dev zip unzip
           apt-get update -qq -y
-          apt-get install -qq -y util-linux curl
-          # echo "install arch值：`arch`"
-          # echo "install lscpu值：`lscpu`"
+          apt-get install -qq -y curl git build-essential libz-dev zlib1g-dev zip unzip
           curl -SOL https://download.oracle.com/graalvm/22/latest/graalvm-jdk-22_linux-aarch64_bin.tar.gz
           tar -zxf graalvm-jdk-22_linux-aarch64_bin.tar.gz
           mkdir -p ~/.m2/repository
           curl -SOL https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz
           tar -zxf apache-maven-3.9.6-bin.tar.gz
-          # cd graalvm-jdk-22+36.1
-          # echo " install 目录是：$(pwd)，当前用户 `whoami`"
-          # export JAVA_HOME=$(pwd)
-          # export GRAALVM_HOME=$(pwd)
-          # echo "export JAVA_HOME=$(pwd)" >> /root/.bashrc
-          # echo "export GRAALVM_HOME=$(pwd)" >> /root/.bashrc
-          # echo "export PATH=$PATH:$JAVA_HOME/bin" >> /root/.bashrc
-          # source /root/.bashrc
-          # java --version
-          # native-image --version
         #容器中运行的命令
         run: |
-           echo "==============aarch run"
+           echo "==============aarch build run"
            export PATH=$PATH:$M2_HOME/bin:$JAVA_HOME/bin
            # env
-           # uname -a
-           # echo "run arch值：`arch`"
-           # echo "run lscpu值：`lscpu`"
-           # echo "run path变量是：$PATH"
-           # echo "run 目录是：$(pwd)，当前用户 `whoami`"
            echo "============java ↓"
            java --version
            echo "============mvn ↓"
